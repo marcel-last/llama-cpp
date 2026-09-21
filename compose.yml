@@ -1,5 +1,4 @@
 services:
-  
   llama-cpp:
     image: ghcr.io/ggml-org/llama.cpp:server-cuda
     container_name: llama-cpp
@@ -8,13 +7,12 @@ services:
       - "8080:8080"
     environment:
       - GGML_CUDA_GRAPH_OPT=1
-      - LLAMA_API_KEY=${LLAMA_API_KEY}
+      - LLAMA_ARG_API_KEY=${LLAMA_API_KEY}
     volumes:
       - /srv/models:/models
     command: >
       --models-preset /models/models.ini
       --models-max 1
-      --api-key ${LLAMA_API_KEY}
       --host 0.0.0.0
       --port 8080
     deploy:
