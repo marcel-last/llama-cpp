@@ -5,7 +5,7 @@ services:
     restart: unless-stopped
     ipc: host
     volumes:
-      - ./models:/models
+      - /srv/models:/models
     ports:
       - "${LLAMA_API_PORT:-9931}:${LLAMA_API_PORT:-9931}"
     environment:
