@@ -3,18 +3,18 @@ services:
     image: ghcr.io/ggml-org/llama.cpp:server-cuda
     container_name: llama-cpp
     restart: unless-stopped
+    ipc: host
     volumes:
       - ./models:/models
     ports:
       - "8080:8080"
     environment:
-      - GGML_CUDA_GRAPH_OPT=1
+      - GGML_CUDA_GRAPH_OPT=${LLAMA_CUDA_GRAPH_OPT}
+      - LLAMA_ARG_MODELS_PRESET=${LLAMA_MODELS_PRESET}
+      - LLAMA_ARG_MODELS_MAX=${LLAMA_MODELS_MAX}
       - LLAMA_ARG_API_KEY=${LLAMA_API_KEY}
-    command: >
-      --models-preset /models/models.ini
-      --models-max 1
-      --host 0.0.0.0
-      --port 8080
+      - LLAMA_ARG_HOST=${LLAMA_API_HOST}
+      - LLAMA_ARG_PORT=${LLAMA_API_PORT}
     deploy:
       resources:
         reservations:
