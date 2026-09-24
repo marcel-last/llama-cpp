@@ -5,16 +5,17 @@ services:
     restart: unless-stopped
     ipc: host
     volumes:
-      - /srv/models:/models
+      - ./models:/models
+      - ./models/models.ini:/models.ini
     ports:
       - "${LLAMA_API_PORT:-9931}:${LLAMA_API_PORT:-9931}"
     environment:
-      - GGML_CUDA_GRAPH_OPT=${LLAMA_CUDA_GRAPH_OPT:-1}
-      - LLAMA_ARG_MODELS_PRESET=${LLAMA_MODELS_PRESET:-}
-      - LLAMA_ARG_MODELS_MAX=${LLAMA_MODELS_MAX:-}
+      - GGML_CUDA_GRAPH_OPT=${LLAMA_CUDA_GRAPH_OPT:-0}
+      - LLAMA_ARG_MODELS_PRESET=/models.ini
+      - LLAMA_ARG_MODELS_MAX=${LLAMA_MODELS_MAX:-1}
       - LLAMA_API_KEY=${LLAMA_API_KEY:-}
-      - LLAMA_ARG_HOST=${LLAMA_API_HOST:-}
-      - LLAMA_ARG_PORT=${LLAMA_API_PORT:-}
+      - LLAMA_ARG_HOST=${LLAMA_API_HOST:-0.0.0.0}
+      - LLAMA_ARG_PORT=${LLAMA_API_PORT:-9931}
     deploy:
       resources:
         reservations:
